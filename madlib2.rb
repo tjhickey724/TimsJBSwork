@@ -20,16 +20,22 @@ def madlib(template)
 end
 
 def lookup(x,d)
-  x.scan(':') collect
-  if ((a=d[x])==nil)
-    return x
+  n=x.length
+  a = x[2..n-3].split(":")
+  tag=a[0]
+  desc=a[1]
+  val=d[tag]
+  if desc==nil
+    return queryFor tag
+  elsif val==nil
+    return (d[tag]=queryFor desc)
   else
-    return a
+    return val
   end
 end
 
 
-x= "I think ((a person)) is ((an adjective))"
+x= "I think ((z: a person)) is ((an adjective)), right ((z))"
 y = madlib x
 puts "\n\n\n"
 puts y
